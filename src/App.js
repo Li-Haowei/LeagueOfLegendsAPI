@@ -5,8 +5,8 @@ import './App.css';
 function App() {
     const [searchText, setSearchText] = useState("");
     const [playerData, setPlayerData] = useState({});
-    const API_KEY = "";
-    
+    const API_KEY = process.env.REACT_APP_API_KEY;
+
     function searchForPlayer(event){
         //Set up the correct API call
         var APICallString = "https://na1.api.riotgames.com" + "/lol/summoner/v4/summoners/by-name/" + searchText + "?api_key=" + API_KEY
@@ -22,12 +22,14 @@ function App() {
     //console.log(playerData)
     return ( 
     <div className = "App" >
-        <div className = "container">
-            <img width="500px" height="200px" src='/lol.png'></img> 
-            <br></br>
-            <input type={'text'} onChange={ e => setSearchText(e.target.value)}></input>
-            <button onClick={e => searchForPlayer(e)}>Search</button>
-        </div>
+        <div className='column'>
+        <img width="500px" height="200px" src='/lol.png'></img> 
+        <br></br>
+        
+            <input id="summonerField" type={'text'} onChange={ e => setSearchText(e.target.value)}></input>
+            <button id="summonerSearchBtn" onClick={e => searchForPlayer(e)}>Search</button>
+        </div> 
+        <div className='column'>
         {JSON.stringify(playerData) != '{}' ? 
         <>
             <h3>{playerData.name}</h3>
@@ -37,6 +39,7 @@ function App() {
         : 
         <><p>No Player Data</p></>
         }
+        </div>
     </div>
     );
 }
