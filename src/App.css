@@ -21,7 +21,10 @@
   border: 5px #61dafb;
   border-radius: 15px;
   color: aliceblue;
-  
+  text-align: center;
+}
+.champs{
+  width: 100%;
 }
 .column{
   display: flex;

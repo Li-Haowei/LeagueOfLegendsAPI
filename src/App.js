@@ -3,15 +3,23 @@ import axios from 'axios';
 import './App.css';
 
 function App() {
+    const [LoLCurrentVersion, setLoLCurrentVersion] = useState("12.14.1");
     const [searchText, setSearchText] = useState("");
     const [playerData, setPlayerData] = useState({});
-    const [championData, setChampionData] = useState({});
+    const [myChampionsData, setMyChampionsData] = useState({});
+    const [allChampionsData, setAllChampionsData] = useState({});
     const API_KEY = process.env.REACT_APP_API_KEY;
+    axios.get("https://ddragon.leagueoflegends.com/api/versions.json").then(
+        function(response){
+            setLoLCurrentVersion(response.data[0]);
+        })
+    var champs = [];
 
     function searchForPlayer(event){
+        console.log("search for player...")
         //Set up the correct API call
             return new Promise(function(resolve){
-                setTimeout(function(){
+                return new Promise(function(resolve){
                     var SummonerCallString = 
                         "https://na1.api.riotgames.com" + 
                         "/lol/summoner/v4/summoners/by-name/" + 
@@ -32,22 +40,35 @@ function App() {
         
     }
     function searchForChampions(data){
-        var ChampionCallString = 
-                    "https://na1.api.riotgames.com" + 
-                    "/lol/champion-mastery/v4/champion-masteries/by-summoner/" + 
-                    data.id + 
-                    "?api_key=" + 
-                    API_KEY
-            axios.get(ChampionCallString).then(function (response){
-                        //Success
-                        setChampionData(response.data)
-                    }).catch(function (error){
-                        //Error
-                        console.log(error)
-                    })
+        console.log("search for champion pool...")
+        searchForChampionsMasteries()
+        return new Promise(function(resolve){
+            return new Promise(function(resolve){
+                var ChampionCallString = 
+                        "https://na1.api.riotgames.com" + 
+                        "/lol/champion-mastery/v4/champion-masteries/by-summoner/" + 
+                        data.id + 
+                        "?api_key=" + 
+                        API_KEY
+                axios.get(ChampionCallString).then(function (response){
+                            //Success
+                            setMyChampionsData(response.data)
+                            //resolve(searchForChampionsMasteries( response.data));
+                        }).catch(function (error){
+                            //Error
+                            console.log(error)
+                        })
+                    }, 1000);
+                });     
     }
-    console.log(championData)
-    //console.log(playerData)
+    function searchForChampionsMasteries(){
+             fetch('http://ddragon.leagueoflegends.com/cdn/' 
+             + LoLCurrentVersion + '/data/en_US/champion.json').then((response) => response.json())
+                                    .then((responseJson) => {
+                                        setAllChampionsData(responseJson.data)
+                                    })
+    }
+    console.log(allChampionsData)
     return ( 
     <div className = "App">
         <div className='Top'>
@@ -90,15 +111,12 @@ function App() {
             </div>
         </div>
         <div className='Mid'>
-        {JSON.stringify(championData) != '{}' ? 
-            <>
-                <h3>Total Points: {championData.championPoints}</h3>
-                <h5>Summoner Level {playerData.summonerLevel}</h5>
-                <img width="200px" 
-                    height="200px" 
-                    src={"http://ddragon.leagueoflegends.com/cdn/12.15.1/img/profileicon/" 
-                    + playerData.profileIconId +".png"}>
-                </img>
+        {JSON.stringify(myChampionsData) != '{}' ? 
+            <>  
+            <div className='champs'>
+                <h3>Number of Champion played: {myChampionsData.length}</h3>
+                
+            </div>
             </> 
             : 
             <><p>No Player Data</p></>
