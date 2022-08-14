@@ -10,7 +10,6 @@ function App() {
 
     function searchForPlayer(event){
         //Set up the correct API call
-        async function helper(){ 
             return new Promise(function(resolve){
                 setTimeout(function(){
                     var SummonerCallString = 
@@ -23,33 +22,31 @@ function App() {
                     axios.get(SummonerCallString).then(function (response){
                         //Success
                         setPlayerData(response.data)
+                        resolve(searchForChampions(response.data));
                     }).catch(function (error){
                         //Error
                         console.log(error)
                     })
-                    resolve();
-                }, 2000);
+                }, 1000);
             });
-        }
-        helper().then(searchForChallenges());
+        
     }
-    function searchForChallenges(){
-        console.log(playerData)
-        var ChallengeCallString = 
+    function searchForChampions(data){
+        var ChampionCallString = 
                     "https://na1.api.riotgames.com" + 
                     "/lol/champion-mastery/v4/champion-masteries/by-summoner/" + 
-                    playerData.id + 
+                    data.id + 
                     "?api_key=" + 
                     API_KEY
-            axios.get(ChallengeCallString).then(function (response){
+            axios.get(ChampionCallString).then(function (response){
                         //Success
                         setChampionData(response.data)
-                        console.log(championData)
                     }).catch(function (error){
                         //Error
                         console.log(error)
-                    });
+                    })
     }
+    console.log(championData)
     //console.log(playerData)
     return ( 
     <div className = "App">
@@ -67,7 +64,9 @@ function App() {
                     onKeyDown={e => 
                                 {
                                     if(e.keyCode ===13)
-                                    {searchForPlayer(e.target.value)}
+                                    {
+                                        searchForPlayer(e.target.value);
+                                    }
                                 }
                             }
                 ></input>
