@@ -32,16 +32,29 @@
   margin: 0 50px 0 50px;
 }
 #champ_pool{
+  width: 100%;
   margin: 0 50px 0 50px;
-  
+  display: flex;
+  flex-direction: column;
+}
+.category{
   display: flex;
   flex-direction: row;
+}
+.category div{
+  width: 100px;
 }
 #champ_pool h2{
   color: aliceblue;
 }
+#champ_pool p{
+  flex-wrap: wrap;
+  background-color: #000000;
+  color: aliceblue;
+}
 .champ_plate{
   z-index: 1;
+  width: 100px;
   background-color: black;
 }
 

@@ -192,23 +192,17 @@ function App() {
             for (let mastery = 7; mastery >= 1; mastery--) {
                 result += "<img width='100px' height='100px' src='"
                                     +"/m"+mastery+".png'></img>"
+                result += "<br>"
                 const championsList = masteryList[mastery];
                 //console.log(championsList)
                 for (let i = 0; i < championsList.length; i++) {
                     const champ = championsList[i];
-                    result +=           "<div className='champ_plate'>"
-                                        +"<p>"
-                                        + champ[0]
-                                        + "</p>"
-                                        +"<img src='"
+                    result +=           
+                                        "<img src='"
                                         + champ[1]
                                         +"'>"+"</img>"
-                                        +"<p>"
-                                        + "Mastery Points: "
-                                        + champ[3]['championPoints']
-                                        + "</p>"
-                                        + "</div>"
                 }
+                result += "<br>"
             }
             result+= "</div>"
             champPool.innerHTML += result
