@@ -79,22 +79,9 @@ function App() {
              fetch('http://ddragon.leagueoflegends.com/cdn/' 
              + LoLCurrentVersion + '/data/en_US/champion.json').then((response) => response.json())
                                     .then((responseJson) => {
-                                        var champPool = document.getElementById('champ_pool');
-                                        champPool.innerHTML = "";
                                         var result = [];
                                         for(var i in responseJson.data){
                                             if(myChamps[responseJson.data[i]['key']]==undefined) continue;
-                                            /*champPool.innerHTML += 
-                                            "<p>"
-                                            + responseJson.data[i]['id']
-                                            + "</p>"
-                                            +"<img src='"
-                                            +"http://ddragon.leagueoflegends.com/cdn/12.15.1/img/champion/"
-                                            +responseJson.data[i]['image']['full']
-                                            +"'>"+"</img>"
-                                            +"<p>"
-                                            + myChamps[responseJson.data[i]['key']]['championPoints']
-                                            + "</p>"*/
                                             result.push(
                                                 [i, 
                                                 "http://ddragon.leagueoflegends.com/cdn/12.15.1/img/champion/"+responseJson.data[i]['image']['full'], 
@@ -114,7 +101,7 @@ function App() {
         var listOfTanks = [];
         var listOfMarksmen = [];
         var listOfSupports = [];
-        var listOfTanks = [];
+        var listOfMages = [];
         var listOfAssasins = [];
         for (let index = 0; index < data.length; index++) {
             const champion = data[index];
@@ -131,7 +118,7 @@ function App() {
                         listOfMarksmen.push(champion)
                         break;
                     case 'Mage':
-                        listOfFighters.push(champion)
+                        listOfMages.push(champion)
                         break;
                     case 'Support':
                         listOfSupports.push(champion)
@@ -140,12 +127,92 @@ function App() {
                         listOfAssasins.push(champion)
                         break; 
                     default:
-                        console.log(champion[2]['tags'][0])
                         break;
                 }
             }
         }
-        console.log(listOfFighters,listOfTanks,listOfMarksmen,listOfSupports,listOfTanks,listOfAssasins)
+        //console.log(listOfTanks)
+        const allLists = [listOfFighters,listOfTanks,listOfMarksmen,listOfMages,listOfSupports,listOfAssasins]
+        for (let index = 0; index < allLists.length; index++) {
+            allLists[index] = sortByChampionLevels(allLists[index])
+        }
+        createChampionPoolView(allLists)
+    }
+    /*Sort champion list by their levels and mastery*/
+    function sortByChampionLevels(list){
+        list.sort(function(a,b){
+            return b[3]['championLevel']-a[3]['championLevel'] 
+        });
+        var newList = {1:[],2:[],3:[],4:[],5:[],6:[],7:[]};
+        for (let i = 0; i < list.length; i++) {
+            const champ = list[i];
+            newList[champ[3]['championLevel']].push(champ);
+        }
+        for (let index = 1; index <= 7; index++) {
+            newList[index].sort(function(a,b){
+                return b[3]['championPoints']-a[3]['championPoints'] 
+            }); 
+        }
+        //console.log(newList)
+        return newList;
+    }
+    function createChampionPoolView(list){
+        var champPool = document.getElementById('champ_pool');
+        champPool.innerHTML = "";
+        for (let index = 0; index < list.length; index++) {
+            var result = ""
+            var title = ""
+            switch (index) {
+                case 0:
+                    title = "FIGHTER"
+                    break;
+                case 1:
+                    title = "TANK"
+                    break;
+                case 2:
+                    title = "MASKSMAN"
+                    break;
+                case 3:
+                    title = "MAGE"
+                    break;
+                case 4:
+                    title = "SUPPORT"
+                    break;
+                case 5:
+                    title = "ASSASSIN"
+                    break;
+                default:
+                    break;
+            }
+            result += "<div className='category'>"
+            result += "<h2>"
+                                + title
+                                + "</h2>"
+            const masteryList = list[index];
+            for (let mastery = 7; mastery >= 1; mastery--) {
+                result += "<img width='100px' height='100px' src='"
+                                    +"/m"+mastery+".png'></img>"
+                const championsList = masteryList[mastery];
+                //console.log(championsList)
+                for (let i = 0; i < championsList.length; i++) {
+                    const champ = championsList[i];
+                    result +=           "<div className='champ_plate'>"
+                                        +"<p>"
+                                        + champ[0]
+                                        + "</p>"
+                                        +"<img src='"
+                                        + champ[1]
+                                        +"'>"+"</img>"
+                                        +"<p>"
+                                        + "Mastery Points: "
+                                        + champ[3]['championPoints']
+                                        + "</p>"
+                                        + "</div>"
+                }
+            }
+            result+= "</div>"
+            champPool.innerHTML += result
+        }
     }
 
     return ( 
@@ -192,7 +259,7 @@ function App() {
         {JSON.stringify(myChampionsData) != '{}' ? 
             <>  
             <div className='champs'>
-                <h3>Number of Champion played: {myChampionsData.length}</h3>
+                <h3>Champion Pool: {myChampionsData.length}</h3>
                 <div id='champ_pool'>
                 </div>
             </div>
