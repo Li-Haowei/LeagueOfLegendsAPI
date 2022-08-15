@@ -7,7 +7,8 @@ function App() {
     const [searchText, setSearchText] = useState("");
     const [playerData, setPlayerData] = useState({});
     const [myChampionsData, setMyChampionsData] = useState({});
-    const [allChampionsData, setAllChampionsData] = useState({});
+    const [allChampionsData, setAllChampionsData] = useState([]);
+    const [myChampsToChampsPool, bindMyChampsToChampsPool] = useState({});
     const API_KEY = process.env.REACT_APP_API_KEY;
     axios.get("https://ddragon.leagueoflegends.com/api/versions.json").then(
         function(response){
@@ -41,7 +42,7 @@ function App() {
     }
     function searchForChampions(data){
         console.log("search for champion pool...")
-        searchForChampionsMasteries()
+        var result = {};
         return new Promise(function(resolve){
             return new Promise(function(resolve){
                 var ChampionCallString = 
@@ -53,7 +54,12 @@ function App() {
                 axios.get(ChampionCallString).then(function (response){
                             //Success
                             setMyChampionsData(response.data)
-                            //resolve(searchForChampionsMasteries( response.data));
+                            for(var i in response.data){
+                                result[response.data[i]["championId"]] = response.data[i]
+                            }
+                            bindMyChampsToChampsPool(result)
+                            searchForChampionsPool(result)
+                            //console.log(result)
                         }).catch(function (error){
                             //Error
                             console.log(error)
@@ -61,14 +67,37 @@ function App() {
                     }, 1000);
                 });     
     }
-    function searchForChampionsMasteries(){
+    function searchForChampionsPool(myChamps){
+        setTimeout(function(){
              fetch('http://ddragon.leagueoflegends.com/cdn/' 
              + LoLCurrentVersion + '/data/en_US/champion.json').then((response) => response.json())
                                     .then((responseJson) => {
-                                        setAllChampionsData(responseJson.data)
+                                        var champPool = document.getElementById('champ_pool');
+                                        champPool.innerHTML = "";
+                                        var result = [];
+                                        for(var i in responseJson.data){
+                                            if(myChamps[responseJson.data[i]['key']]==undefined) continue;
+                                            /*champPool.innerHTML += 
+                                            "<p>"
+                                            + responseJson.data[i]['id']
+                                            + "</p>"
+                                            +"<img src='"
+                                            +"http://ddragon.leagueoflegends.com/cdn/12.15.1/img/champion/"
+                                            +responseJson.data[i]['image']['full']
+                                            +"'>"+"</img>"
+                                            +"<p>"
+                                            + myChamps[responseJson.data[i]['key']]['championPoints']
+                                            + "</p>"*/
+                                            result.push([i, responseJson.data[i],myChamps[responseJson.data[i]['key']]])
+                                        }
+                                        //console.log(responseJson.data[i])
+                                        //console.log(myChamps[responseJson.data[i]['key']])
+                                        setAllChampionsData(result)
+                                        console.log(result)
                                     })
+                                }, 1000);
     }
-    console.log(allChampionsData)
+    //console.log(allChampionsData)
     return ( 
     <div className = "App">
         <div className='Top'>
@@ -103,7 +132,6 @@ function App() {
                     src={"http://ddragon.leagueoflegends.com/cdn/12.15.1/img/profileicon/" 
                     + playerData.profileIconId +".png"}>
                 </img>
-                
             </> 
             : 
             <><p>No Player Data</p></>
@@ -115,7 +143,8 @@ function App() {
             <>  
             <div className='champs'>
                 <h3>Number of Champion played: {myChampionsData.length}</h3>
-                
+                <div id='champ_pool'>
+                </div>
             </div>
             </> 
             : 
