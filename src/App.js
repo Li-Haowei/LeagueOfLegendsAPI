@@ -10,6 +10,13 @@ function App() {
     const [allChampionsData, setAllChampionsData] = useState([]);
     const [myChampsToChampsPool, bindMyChampsToChampsPool] = useState({});
     const API_KEY = process.env.REACT_APP_API_KEY;
+
+    const [tanks, setTanks] = useState([]);
+    const [mages, setMages] = useState([]);
+    const [fighters, setFighters] = useState([]);
+    const [marksmen, setMarksmen] = useState([]);
+    const [supports, setSupports] = useState([]);
+    const [assasins, setAssasins] = useState([]);
     axios.get("https://ddragon.leagueoflegends.com/api/versions.json").then(
         function(response){
             setLoLCurrentVersion(response.data[0]);
@@ -88,16 +95,59 @@ function App() {
                                             +"<p>"
                                             + myChamps[responseJson.data[i]['key']]['championPoints']
                                             + "</p>"*/
-                                            result.push([i, responseJson.data[i],myChamps[responseJson.data[i]['key']]])
+                                            result.push(
+                                                [i, 
+                                                "http://ddragon.leagueoflegends.com/cdn/12.15.1/img/champion/"+responseJson.data[i]['image']['full'], 
+                                                responseJson.data[i],
+                                                myChamps[responseJson.data[i]['key']]])
                                         }
                                         //console.log(responseJson.data[i])
                                         //console.log(myChamps[responseJson.data[i]['key']])
                                         setAllChampionsData(result)
-                                        console.log(result)
+                                        sortChampsByCat(result)
                                     })
-                                }, 1000);
+                                }, 0);
     }
-    //console.log(allChampionsData)
+    
+    function sortChampsByCat(data){
+        var listOfFighters = [];
+        var listOfTanks = [];
+        var listOfMarksmen = [];
+        var listOfSupports = [];
+        var listOfTanks = [];
+        var listOfAssasins = [];
+        for (let index = 0; index < data.length; index++) {
+            const champion = data[index];
+            //console.log(champion[2]['tags'])
+            for (let j = 0; j < champion[2]['tags'].length; j++) {
+                switch (champion[2]['tags'][j]) {
+                    case 'Fighter':
+                        listOfFighters.push(champion)
+                        break;
+                    case 'Tank':
+                        listOfTanks.push(champion)
+                        break;
+                    case 'Marksman':
+                        listOfMarksmen.push(champion)
+                        break;
+                    case 'Mage':
+                        listOfFighters.push(champion)
+                        break;
+                    case 'Support':
+                        listOfSupports.push(champion)
+                        break; 
+                    case 'Assassin':
+                        listOfAssasins.push(champion)
+                        break; 
+                    default:
+                        console.log(champion[2]['tags'][0])
+                        break;
+                }
+            }
+        }
+        console.log(listOfFighters,listOfTanks,listOfMarksmen,listOfSupports,listOfTanks,listOfAssasins)
+    }
+
     return ( 
     <div className = "App">
         <div className='Top'>
