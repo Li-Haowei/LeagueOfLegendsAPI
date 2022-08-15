@@ -10,7 +10,7 @@ function App() {
     const [allChampionsData, setAllChampionsData] = useState([]);
     const [myChampsToChampsPool, bindMyChampsToChampsPool] = useState({});
     const API_KEY = process.env.REACT_APP_API_KEY;
-
+    
     const [tanks, setTanks] = useState([]);
     const [mages, setMages] = useState([]);
     const [fighters, setFighters] = useState([]);
@@ -21,7 +21,6 @@ function App() {
         function(response){
             setLoLCurrentVersion(response.data[0]);
         })
-    var champs = [];
 
     function searchForPlayer(event){
         console.log("search for player...")
@@ -81,7 +80,7 @@ function App() {
                                     .then((responseJson) => {
                                         var result = [];
                                         for(var i in responseJson.data){
-                                            if(myChamps[responseJson.data[i]['key']]==undefined) continue;
+                                            if(myChamps[responseJson.data[i]['key']]===undefined) continue;
                                             result.push(
                                                 [i, 
                                                 "http://ddragon.leagueoflegends.com/cdn/12.15.1/img/champion/"+responseJson.data[i]['image']['full'], 
@@ -136,6 +135,12 @@ function App() {
         for (let index = 0; index < allLists.length; index++) {
             allLists[index] = sortByChampionLevels(allLists[index])
         }
+        setFighters(allLists[0])
+        setTanks(allLists[1])
+        setMarksmen(allLists[2])
+        setMages(allLists[3])
+        setSupports(allLists[4])
+        setAssasins(allLists[5])
         createChampionPoolView(allLists)
     }
     /*Sort champion list by their levels and mastery*/
@@ -185,9 +190,9 @@ function App() {
                     break;
             }
             result += "<div className='category'>"
-            result += "<h2>"
-                                + title
-                                + "</h2>"
+            result += "<section id='" + title + "'><h2>"
+                        + title
+                        + "</h2></section>"
             const masteryList = list[index];
             for (let mastery = 7; mastery >= 1; mastery--) {
                 result += "<img width='100px' height='100px' src='"
@@ -200,10 +205,11 @@ function App() {
                     result +=           
                                         "<img src='"
                                         + champ[1]
-                                        +"'>"+"</img>"
+                                        +"'></img>"
                 }
                 result += "<br>"
             }
+            
             result+= "</div>"
             champPool.innerHTML += result
         }
@@ -213,7 +219,7 @@ function App() {
     <div className = "App">
         <div className='Top'>
             <div className='column'>
-            <img width="500px" height="200px" src='/lol.png'></img> 
+            <img width="500px" height="200px" src='/lol.png' alt="league logo"></img> 
             <br></br>
             
                 <input 
@@ -234,26 +240,48 @@ function App() {
                 <button id="summonerSearchBtn" onClick={e => searchForPlayer(e)}>Search</button>
             </div> 
             <div className='column'>
-            {JSON.stringify(playerData) != '{}' ? 
+            {JSON.stringify(playerData) !== '{}' ? 
             <>
+                <div>
                 <h3>{playerData.name}</h3>
                 <h5>Summoner Level {playerData.summonerLevel}</h5>
                 <img width="200px" 
                     height="200px" 
+                    alt="profile icon"
                     src={"http://ddragon.leagueoflegends.com/cdn/12.15.1/img/profileicon/" 
                     + playerData.profileIconId +".png"}>
                 </img>
+                </div>
+  
             </> 
             : 
             <><p>No Player Data</p></>
             }
             </div>
+            {JSON.stringify(playerData) !== '{}' ? 
+            <>
+                <span class="hex1" />
+                <span class="hex4" />
+            </> 
+            : 
+            <></>
+            }
         </div>
         <div className='Mid'>
-        {JSON.stringify(myChampionsData) != '{}' ? 
+        {JSON.stringify(myChampionsData) !== '{}' ? 
             <>  
             <div className='champs'>
-                <h3>Champion Pool: {myChampionsData.length}</h3>
+                <div>
+                    <h3>Champion Pool: {myChampionsData.length}</h3>
+                    <h2>
+                        <a href = "#FIGHTER">FIGHTER</a><br></br>
+                        <a href = "#TANK">TANK</a><br></br>
+                        <a href = "#MASKSMAN">MASKSMAN</a><br></br>
+                        <a href = "#MAGE">MAGE</a><br></br>
+                        <a href = "#SUPPORT">SUPPORT</a><br></br>
+                        <a href = "#ASSASSIN">ASSASSIN</a><br></br>
+                    </h2>
+                </div>
                 <div id='champ_pool'>
                 </div>
             </div>

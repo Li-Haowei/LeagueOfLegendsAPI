@@ -108,3 +108,48 @@
     transform: rotate(360deg);
   }
 }
+
+.hex1::before {
+  top: -90px;
+  margin-left: 100px;
+  position: fixed;
+  content: "\2B22";
+  color: orange;
+  font-size:400px;
+}
+
+.hex2::before {
+  top: -90px;
+  margin-left: 100px;
+  position: fixed;
+  content: "\2B22";
+  color: blue;
+  font-size:400px;
+  /*
+  -webkit-transform: rotate(-30deg);
+  -moz-transform: rotate(-30deg);
+  -o-transform: rotate(-30deg);
+  transform: rotate(-30deg);
+  */
+}
+.hex3 {
+  position: fixed;
+  height: 200px;
+  width: 200px;
+  margin-top: 90px;
+  margin-left: 158px;
+  color: orange;
+  -webkit-clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+  clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+}
+.hex4 {
+  position: fixed;
+  left: 940px;
+  height: 200px;
+  width: 200px;
+  margin-top: 65px;
+  margin-left: 158px;
+  background: blue;
+  /*-webkit-clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);*/
+  clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+}
