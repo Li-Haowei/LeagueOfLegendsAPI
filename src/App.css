@@ -189,3 +189,6 @@
   visibility: visible;
   opacity: 0.7; 
  }
+ .float-panel{
+  position: fixed;
+ }

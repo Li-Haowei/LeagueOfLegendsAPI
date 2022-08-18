@@ -202,7 +202,6 @@ function App() {
                 //console.log(championsList)
                 for (let i = 0; i < championsList.length; i++) {
                     const champ = championsList[i];
-                    var div = document.createElement('div');
                     /*
                     var div = document.createElement('div');
                     div.className = 'content_img'
@@ -239,7 +238,7 @@ function App() {
 
     return ( 
     <div className = "App">
-        <div className='Top'>
+        <div className='Top' id='Top'>
             <div className='column'>
             <img width="500px" height="200px" src='/lol.png' alt="league logo"></img> 
             <br></br>
@@ -295,7 +294,7 @@ function App() {
             <div className='champs'>
                 <div>
                     <h3>Champion Pool: {myChampionsData.length}</h3>
-                    <h2>
+                    <h2 className='float-panel'>
                         <a href = "#FIGHTER">FIGHTER</a><br></br>
                         <a href = "#TANK">TANK</a><br></br>
                         <a href = "#MASKSMAN">MASKSMAN</a><br></br>
