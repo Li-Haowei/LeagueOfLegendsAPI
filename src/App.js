@@ -202,10 +202,26 @@ function App() {
                 //console.log(championsList)
                 for (let i = 0; i < championsList.length; i++) {
                     const champ = championsList[i];
+                    /*
+                    var div = document.createElement('div');
+                    div.className = 'content_img'
+                    div.append("<img src='"
+                                + champ[1]
+                                +"'/>")
+                    div.append("<div>"
+                            +champ[3]['championPoints']
+                            +"</div>")
+                            //id='" + champ[0] +"'
+                            */
                     result +=           
-                                        "<img src='"
-                                        + champ[1]
-                                        +"'></img>"
+                            "<div style='width:120px;margin:0;padding:0;display:inline;' onmouseover='function showEl(){console.log("+"this.div"+")}; \n showEl();'>"
+                            +"<img src='"
+                            + champ[1]
+                            +"'/>"
+                            +"<div style='display: inline-block; visibility: hidden; width:50px;' onmouseover='console.log(e)'>"
+                            +champ[3]['championPoints']
+                            +"</div>"
+                            +"</div>"
                 }
                 result += "<br>"
             }
@@ -260,8 +276,8 @@ function App() {
             </div>
             {JSON.stringify(playerData) !== '{}' ? 
             <>
-                <span class="hex1" />
-                <span class="hex4" />
+                <span className="hex1" />
+                <span className="hex4" />
             </> 
             : 
             <></>
