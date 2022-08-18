@@ -202,6 +202,7 @@ function App() {
                 //console.log(championsList)
                 for (let i = 0; i < championsList.length; i++) {
                     const champ = championsList[i];
+                    var div = document.createElement('div');
                     /*
                     var div = document.createElement('div');
                     div.className = 'content_img'
@@ -214,11 +215,16 @@ function App() {
                             //id='" + champ[0] +"'
                             */
                     result +=           
-                            "<div style='width:120px;margin:0;padding:0;display:inline;' onmouseover='function showEl(){console.log("+"this.div"+")}; \n showEl();'>"
+                            "<div style='width:120px;margin:0;padding:0;display:inline;'>"
+                            //+"onmouseover=(this.lastChild.style.visibility='visible')>"
                             +"<img src='"
                             + champ[1]
                             +"'/>"
-                            +"<div style='display: inline-block; visibility: hidden; width:50px;' onmouseover='console.log(e)'>"
+                            +"<div className='points' style='display: inline-block; visibility: visible; width:50px;font-size:14px;'>"
+                            +"<div style='color:orange;'>"
+                            +champ[0]
+                            +"</div>"
+                            +"<br>"
                             +champ[3]['championPoints']
                             +"</div>"
                             +"</div>"
