@@ -23,7 +23,7 @@ function App() {
         function(response){
             setLoLCurrentVersion(response.data[0]);
         })
-
+    
     function searchForPlayer(event){
         console.log("search for player...")
         //Set up the correct API call
@@ -163,6 +163,9 @@ function App() {
         console.log(newList)
         return newList;
     }
+    function goTo(){
+        console.log(1)
+    }
     function createChampionPoolView(list){
         var champPool = document.getElementById('champ_pool');
         champPool.innerHTML = "";
@@ -220,7 +223,10 @@ function App() {
                             //+"onmouseover=(this.lastChild.style.visibility='visible')>"
                             +"<img src='"
                             + champ[1]
-                            +"'/>"
+                            +"'"
+                            //onclick=(window.open('/ChampDetail/" + this.src.split('/')[this.src.split('/').length-1].split('.')[0] +"'))
+                            //console.log(this.src.split('/')[this.src.split('/').length-1].split('.')[0])
+                            +" onclick=(window.open('/ChampDetail?championName=" + champ[0] +"')) />"
                             +"<div className='points' style='display: inline-block; visibility: visible; width:60px;font-size:14px; overflow: auto;'>"
                             +"<div style='color:orange;'>"
                             +champ[0]
@@ -240,7 +246,6 @@ function App() {
 
     return ( 
     <div className = "App">
-        
         <div className='Top' id='Top'>
             <div className='column'>
             <img width="500px" height="200px" src='/lol.png' alt="league logo"></img> 
