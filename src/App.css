@@ -191,4 +191,10 @@
  }
  .float-panel{
   position: fixed;
+  background-color: aliceblue;
+  border-radius: 25px;
+  padding: 10px;
+ }
+ .float-panel a{
+  text-decoration: none;
  }

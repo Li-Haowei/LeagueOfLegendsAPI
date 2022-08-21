@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import './App.css';
+import ChampDetail from './ChampDetail';
+import {Routes, Route, Link} from 'react-router-dom'
 
 function App() {
     const [LoLCurrentVersion, setLoLCurrentVersion] = useState("12.14.1");
@@ -158,7 +160,7 @@ function App() {
                 return b[3]['championPoints']-a[3]['championPoints'] 
             }); 
         }
-        //console.log(newList)
+        console.log(newList)
         return newList;
     }
     function createChampionPoolView(list){
@@ -238,6 +240,7 @@ function App() {
 
     return ( 
     <div className = "App">
+        
         <div className='Top' id='Top'>
             <div className='column'>
             <img width="500px" height="200px" src='/lol.png' alt="league logo"></img> 
