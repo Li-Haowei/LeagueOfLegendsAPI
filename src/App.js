@@ -219,7 +219,7 @@ function App() {
                             +"<img src='"
                             + champ[1]
                             +"'/>"
-                            +"<div className='points' style='display: inline-block; visibility: visible; width:50px;font-size:14px;'>"
+                            +"<div className='points' style='display: inline-block; visibility: visible; width:60px;font-size:14px; overflow: auto;'>"
                             +"<div style='color:orange;'>"
                             +champ[0]
                             +"</div>"
