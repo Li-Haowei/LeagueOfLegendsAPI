@@ -26,7 +26,12 @@ function ChampDetail(){
     
 
         searchForChampion();
-    return (<h1>Champion Details</h1>)
+    return (
+        <div className="main-page">
+            <h1>{championName} Details</h1>
+            <img src={"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+ championName +"_0.jpg"}></img>
+        </div>
+    )
 }
 
 export default ChampDetail;
