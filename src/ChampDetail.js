@@ -20,8 +20,8 @@ function ChampDetail(){
                  + LoLCurrentVersion + '/data/en_US/champion/' + championName + '.json').then((response) => response.json())
                                         .then((responseJson) => {
                                             setChampDetails(responseJson.data[championName]);
-                                            console.log(champDetails);
-                                            console.log(champDetails['lore'])
+                                            //console.log(champDetails);
+                                            //console.log(champDetails['lore'])
                                         })
                                     }, 500);
         }
@@ -30,12 +30,12 @@ function ChampDetail(){
         //searchForChampion();
     return (
         <div className="main-page">
-            <script>document.ready(searchForChampion())</script>
+            <script>{searchForChampion()}</script>
             <h1>{championName} Details</h1>
             <img src={"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+ championName +"_0.jpg"}></img>
             {JSON.stringify(champDetails) !== '{}' ? 
             <>  
-            <p>{champDetails['lore']}</p>
+            <p className='background-info'>{champDetails['lore']}</p>
             </> 
             : 
             <><p>Loading</p></>
