@@ -52,25 +52,38 @@ function ChampDetail(){
             <tr>
                 <th>{champDetails['spells'][0]['name']}</th>
                 <th><img src={"http://ddragon.leagueoflegends.com/cdn/" + LoLCurrentVersion + "/img/spell/"+ champDetails['spells'][0]['id'] +".png"}></img></th>
-                <th>
-                    {champDetails['spells'][0]['description'].split('<br>')} 
-
-                 Cooldown: {champDetails['spells'][0]['cooldownBurn']} <br></br> Cost: {champDetails['spells'][0]['costBurn']} </th>
+                <th>{champDetails['spells'][0]['description'].split('<br>')} 
+                <br></br>Cooldown: {champDetails['spells'][0]['cooldownBurn']}
+                <br></br> Cost: {champDetails['spells'][0]['costBurn']} 
+                <br></br> Base Damage: {champDetails['spells'][0]['effectBurn'][1]} 
+                </th>
             </tr>
             <tr>
                 <th>{champDetails['spells'][1]['name']}</th>
                 <th><img src={"http://ddragon.leagueoflegends.com/cdn/" + LoLCurrentVersion + "/img/spell/"+ champDetails['spells'][1]['id'] +".png"}></img></th>
-                <th>{champDetails['spells'][1]['description'].replaceAll('<br>', '\n')} <br></br> Cooldown: {champDetails['spells'][1]['cooldownBurn']} <br></br> Cost: {champDetails['spells'][1]['costBurn']} </th>
+                <th>{champDetails['spells'][1]['description'].replaceAll('<br>', '\n')} 
+                <br></br> Cooldown: {champDetails['spells'][1]['cooldownBurn']} 
+                <br></br> Cost: {champDetails['spells'][1]['costBurn']} 
+                <br></br> Base Damage: {champDetails['spells'][1]['effectBurn'][1]} 
+                </th>
             </tr>
             <tr>
                 <th>{champDetails['spells'][2]['name']}</th>
                 <th><img src={"http://ddragon.leagueoflegends.com/cdn/" + LoLCurrentVersion + "/img/spell/"+ champDetails['spells'][2]['id'] +".png"}></img></th>
-                <th>{champDetails['spells'][2]['description'].replaceAll('<br>', '\n')} <br></br> Cooldown: {champDetails['spells'][2]['cooldownBurn']} <br></br> Cost: {champDetails['spells'][2]['costBurn']} </th>
+                <th>{champDetails['spells'][2]['description'].replaceAll('<br>', '\n')} 
+                <br></br> Cooldown: {champDetails['spells'][2]['cooldownBurn']} 
+                <br></br> Cost: {champDetails['spells'][2]['costBurn']} 
+                <br></br> Base Damage: {champDetails['spells'][2]['effectBurn'][1]} 
+                </th>
             </tr>
             <tr>
                 <th>{champDetails['spells'][3]['name']}</th>
                 <th><img src={"http://ddragon.leagueoflegends.com/cdn/" + LoLCurrentVersion + "/img/spell/"+ champDetails['spells'][3]['id'] +".png"}></img></th>
-                <th>{champDetails['spells'][3]['description'].replaceAll('<br>', '\n')} <br></br> Cooldown: {champDetails['spells'][3]['cooldownBurn']} <br></br> Cost: {champDetails['spells'][3]['costBurn']}</th>
+                <th>{champDetails['spells'][3]['description'].replaceAll('<br>', '\n')} 
+                <br></br> Cooldown: {champDetails['spells'][3]['cooldownBurn']} 
+                <br></br> Cost: {champDetails['spells'][3]['costBurn']}
+                <br></br> Base Damage: {champDetails['spells'][3]['effectBurn'][1]} 
+                </th>
             </tr>
             </tbody>
             </table>
