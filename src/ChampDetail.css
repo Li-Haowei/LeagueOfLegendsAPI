@@ -30,4 +30,8 @@
   table {
     width:100%;
   }
+  #champion_stats_chart{
+    width:400px;
+    height:400px;
+  }
   

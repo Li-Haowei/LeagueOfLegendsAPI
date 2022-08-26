@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import axios from 'axios';
 import './ChampDetail.css';
 import { useSearchParams  } from 'react-router-dom'
+import PieChart from "./components/PieChart";
+import { UserData } from "./Data";
 
 function ChampDetail(){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -9,26 +11,43 @@ function ChampDetail(){
     const [champDetails, setChampDetails] = useState({});
     //var champDetails = {};
     const API_KEY = process.env.REACT_APP_API_KEY;
+    const one = 1;
     const championName = searchParams.get("championName")
     axios.get("https://ddragon.leagueoflegends.com/api/versions.json").then(
         function(response){
             setLoLCurrentVersion(response.data[0]);
         });
-        function searchForChampion(){
-            setTimeout(function(){
-                 fetch('http://ddragon.leagueoflegends.com/cdn/' 
-                 + LoLCurrentVersion + '/data/en_US/champion/' + championName + '.json').then((response) => response.json())
-                                        .then((responseJson) => {
-                                            setChampDetails(responseJson.data[championName]);
-                                            //console.log(champDetails['lore'])
-                                        })
-                                    }, 500);
-        }
-    //console.log(JSON.stringify(champDetails) !== '{}')
-    console.log(champDetails);
-        //searchForChampion();
-
+    function searchForChampion(){
+        setTimeout(function(){
+            fetch('http://ddragon.leagueoflegends.com/cdn/' 
+            + LoLCurrentVersion + '/data/en_US/champion/' + championName + '.json').then((response) => response.json())
+                                 .then((responseJson) => {
+                                    setChampDetails(responseJson.data[championName]);
+                                       //console.log(champDetails['lore'])
+                                })
+                            }, 500);
+    }
     
+    console.log(champDetails);
+
+    const [userData, setUserData] = useState({
+        labels: UserData.map((data) => data.year),
+        datasets: [
+          {
+            label: "Users Gained",
+            data: UserData.map((data) => data.userGain),
+            backgroundColor: [
+              "rgba(75,192,192,1)",
+              "#ecf0f1",
+              "#50AF95",
+              "#f3ba2f",
+              "#2a71d0",
+            ],
+            borderColor: "black",
+            borderWidth: 2,
+          },
+        ],
+      });
     return (
         <div className="main-page">
             {JSON.stringify(champDetails) !== '{}' ? 
@@ -37,7 +56,7 @@ function ChampDetail(){
             : 
             <><script>{searchForChampion()}</script></>
             }
-            <h1>{championName} Details</h1>
+            <h1>{champDetails.name} - {champDetails.title}</h1>
             <img src={"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+ championName +"_0.jpg"}></img>
             {JSON.stringify(champDetails) !== '{}' ? 
             <>  
@@ -45,7 +64,7 @@ function ChampDetail(){
             <table>
             <tbody>
             <tr>
-                <th>Passive</th>
+                <th>{champDetails['passive']['name']}</th>
                 <th><img src={"http://ddragon.leagueoflegends.com/cdn/" + LoLCurrentVersion + "/img/passive/"+ champDetails['passive']['image']['full']}></img></th>
                 <th>{champDetails['passive']['description']}</th>
             </tr>
@@ -91,6 +110,16 @@ function ChampDetail(){
             : 
             <><p>Loading</p></>
             }
+            {document.readyState==='complete'? 
+            <>  
+            <script></script>
+            </> 
+            : 
+            <></>
+            }
+            <div style={{ width: 700 }}>
+                <PieChart chartData={userData} />
+            </div>
         </div>
     )
 }
