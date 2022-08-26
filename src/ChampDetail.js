@@ -76,7 +76,7 @@ function ChampDetail(){
             const skin = skins[index];
             const src = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+ championName +"_" + skin['num'] +".jpg"
             const img = document.createElement('img');
-            img.className = 'champ-pic'
+            img.className = 'champ-pic fade-in'
             img.src = src;
             const div = document.createElement('div');
             div.className = 'mySlides1'
@@ -104,6 +104,8 @@ function ChampDetail(){
             plusSlides(-1, 0);
         });
         a1.innerHTML = '&#10094;';
+        const span1 = document.createElement('span');
+        a1.appendChild(span1);
         /*next page*/
         const a2 = document.createElement('a');
         a2.className = 'next';
@@ -124,7 +126,8 @@ function ChampDetail(){
             plusSlides(1, 0);
         });
         a2.innerHTML = '&#10095;';
-        //container.innerHTML += "<a className='prev' onclick='plusSlides(-1, 0)'>&#10094;</a> <a className='next' onclick='plusSlides(1, 0)'>&#10095;</a>";
+        const span2 = document.createElement('span');
+        a2.appendChild(span2);
         container.appendChild(a1);
         container.appendChild(a2);
         showSlides(1, 0);

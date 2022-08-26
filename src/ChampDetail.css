@@ -74,6 +74,12 @@
     border-radius: 0 3px 3px 0;
     user-select: none;
     background-color: #000000;
+    box-shadow: 0 9px #999;
+  }
+  .prev:active, .next:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
   }
   
   /* Position the "next button" to the right */
@@ -86,6 +92,30 @@
     border-radius: 3px 0 0 3px;
   }
   
+  .prev span, .next span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .prev span:after, .next span::after {
+    /*content: '\00bb';*/
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .prev:hover span, .next:hover span {
+    padding-right: 25px;
+  }
+  
+  .prev:hover span:after, .next:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
   /* On hover, add a grey background color */
   .prev:hover, .next:hover {
     background-color: #f1f1f1;
@@ -94,3 +124,48 @@
   .champ-pic{
     width: 100vh;
   }
+
+  .fade-in {
+    animation: fadeIn ease 2s;
+    -webkit-animation: fadeIn ease 2s;
+    -moz-animation: fadeIn ease 2s;
+    -o-animation: fadeIn ease 2s;
+  }
+  @keyframes fadeIn {
+    0% {
+      width: 95vh;
+      opacity:0;
+    }
+    100% {
+      width: 100vh;
+      opacity:1;
+    }
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+  
+  @-o-keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+  
