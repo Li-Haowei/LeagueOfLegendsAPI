@@ -6,7 +6,7 @@
     border-radius: 8px;
 }
 .background-info{
-    background-color:antiquewhite;
+    background-color:rgb(252, 179, 84);
     margin: 10px 50px 10px 50px;
     font-size: 20px;
     border-radius: 30px 10px 30px 0;
@@ -16,11 +16,16 @@
     position: relative;
     display: flex;
     align-items: center;
+    -webkit-box-shadow: -2px -1px 15px 7px rgba(0,0,0,0.5);
+    -moz-box-shadow: -3px -2px 30px 14px rgba(0,0,0,0.425);
+    box-shadow: -10px -3px 45px 21px rgba(0,0,0,0.35);
+    text-shadow: 2px 2px 4px #000000;
   }
 
   table, th, td {
-    border:1px solid black;
+    border:5px solid black;
     word-wrap:break-word;
+    background-color: rgb(252, 179, 84);
   }
   table {
     width:100%;
