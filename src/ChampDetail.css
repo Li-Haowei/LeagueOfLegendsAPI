@@ -28,7 +28,8 @@
     background-color: rgb(252, 179, 84);
   }
   table {
-    width:100%;
+    width:90%;
+    margin: 0 0 0 5%;
   }
   #champion_stats_chart{
     top: 20px;
@@ -40,4 +41,56 @@
     background-color: #c49c9c;
     border-radius: 25%;
     padding: 30px;
+    box-shadow: 10px 5px 5px #473a3a;
+  }
+
+  * {
+    box-sizing: border-box
+  }
+  .mySlides1 {
+    display: none
+  }
+  img {
+    vertical-align: middle;
+  }
+  
+  /* Slideshow container */
+  .slideshow-container {
+    position: relative;
+    margin: auto;
+  }
+  
+  /* Next & previous buttons */
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top:40%;
+    width: auto;
+    padding: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: #000000;
+  }
+  
+  /* Position the "next button" to the right */
+  .prev {
+    left: 20%;
+    border-radius: 3px 0 0 3px;
+  }
+  .next {
+    right: 20%;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  /* On hover, add a grey background color */
+  .prev:hover, .next:hover {
+    background-color: #f1f1f1;
+    color: black;
+  }
+  .champ-pic{
+    width: 100vh;
   }

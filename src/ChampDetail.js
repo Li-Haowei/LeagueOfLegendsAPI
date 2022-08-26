@@ -53,6 +53,89 @@ function ChampDetail(){
           });
         }
     }
+    let slideIndex = [1,1];
+    function plusSlides(n, no) {
+        showSlides(slideIndex[no] += n, no);
+    }
+    function showSlides(n, no) {
+        let i;
+        let x = document.getElementsByClassName("mySlides1");
+        if (n > x.length) {slideIndex[no] = 1}    
+        if (n < 1) {slideIndex[no] = x.length}
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+        }
+        x[slideIndex[no]-1].style.display = "block";  
+    }
+    
+    function loadChampionPictures(){
+        const skins = champDetails['skins'];
+        const container = document.getElementsByClassName("slideshow-container")[0];
+        container.innerHTML = '';
+        for (let index = 0; index < skins.length; index++) {
+            const skin = skins[index];
+            const src = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+ championName +"_" + skin['num'] +".jpg"
+            const img = document.createElement('img');
+            img.className = 'champ-pic'
+            img.src = src;
+            const div = document.createElement('div');
+            div.className = 'mySlides1'
+            div.appendChild(img);
+            
+            container.appendChild(div);
+        }
+        /*previous page*/
+        const a1 = document.createElement('a');
+        a1.className = 'prev';
+        a1.addEventListener("click", function(){
+            function plusSlides(n, no) {
+                showSlides(slideIndex[no] += n, no);
+            }
+            function showSlides(n, no) {
+                let i;
+                let x = document.getElementsByClassName("mySlides1");
+                if (n > x.length) {slideIndex[no] = 1}    
+                if (n < 1) {slideIndex[no] = x.length}
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";  
+                }
+                x[slideIndex[no]-1].style.display = "block";  
+            }
+            plusSlides(-1, 0);
+        });
+        a1.innerHTML = '&#10094;';
+        /*next page*/
+        const a2 = document.createElement('a');
+        a2.className = 'next';
+        a2.addEventListener("click", function(){
+            function plusSlides(n, no) {
+                showSlides(slideIndex[no] += n, no);
+            }
+            function showSlides(n, no) {
+                let i;
+                let x = document.getElementsByClassName("mySlides1");
+                if (n > x.length) {slideIndex[no] = 1}    
+                if (n < 1) {slideIndex[no] = x.length}
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";  
+                }
+                x[slideIndex[no]-1].style.display = "block";  
+            }
+            plusSlides(1, 0);
+        });
+        a2.innerHTML = '&#10095;';
+        //container.innerHTML += "<a className='prev' onclick='plusSlides(-1, 0)'>&#10094;</a> <a className='next' onclick='plusSlides(1, 0)'>&#10095;</a>";
+        container.appendChild(a1);
+        container.appendChild(a2);
+        showSlides(1, 0);
+        showSlides(1, 1);
+    }
+    if(JSON.stringify(champDetails) !== '{}'){
+        loadChampionPictures();
+    }   
+    
+    console.log(champDetails)
+    //<img style={{visibility:'collapse'}} src={"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+ championName +"_0.jpg"}></img>
     return (
         <div className="main-page">
             {JSON.stringify(champDetails) !== '{}' ? 
@@ -62,7 +145,10 @@ function ChampDetail(){
             <><script>{searchForChampion()}</script></>
             }
             <h1>{champDetails.name} - {champDetails.title}</h1>
-            <img src={"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+ championName +"_0.jpg"}></img>
+            <div className="slideshow-container">
+
+            </div>
+            
             {JSON.stringify(userData) !== '{}'? 
             <>  
                 <div id='champion_stats_chart'>
@@ -129,3 +215,17 @@ function ChampDetail(){
 }
 
 export default ChampDetail;
+export let slideIndex = [1,1];
+export function plusSlides(n, no) {
+    showSlides(slideIndex[no] += n, no);
+}
+export function showSlides(n, no) {
+    let i;
+    let x = document.getElementsByClassName("mySlides1");
+    if (n > x.length) {slideIndex[no] = 1}    
+    if (n < 1) {slideIndex[no] = x.length}
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";  
+    }
+    x[slideIndex[no]-1].style.display = "block";  
+}
