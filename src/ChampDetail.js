@@ -3,13 +3,12 @@ import axios from 'axios';
 import './ChampDetail.css';
 import { useSearchParams  } from 'react-router-dom'
 import PieChart from "./components/PieChart";
-import { UserData } from "./Data";
 
 function ChampDetail(){
     const [searchParams, setSearchParams] = useSearchParams();
     const [LoLCurrentVersion, setLoLCurrentVersion] = useState("12.14.1");
     const [champDetails, setChampDetails] = useState({});
-    //var champDetails = {};
+    const [userData, setUserData] = useState({});
     const API_KEY = process.env.REACT_APP_API_KEY;
     const one = 1;
     const championName = searchParams.get("championName")
@@ -27,27 +26,33 @@ function ChampDetail(){
                                 })
                             }, 500);
     }
-    
-    console.log(champDetails);
-
-    const [userData, setUserData] = useState({
-        labels: UserData.map((data) => data.year),
-        datasets: [
-          {
-            label: "Users Gained",
-            data: UserData.map((data) => data.userGain),
-            backgroundColor: [
-              "rgba(75,192,192,1)",
-              "#ecf0f1",
-              "#50AF95",
-              "#f3ba2f",
-              "#2a71d0",
+    function renderChart(){
+        if(JSON.stringify(champDetails) !== '{}'){
+            //console.log(Object.keys(champDetails.info));
+            //console.log(Object.values(champDetails.info));
+            /**/
+            setUserData({
+            labels: Object.keys(champDetails.info),
+            datasets: [
+              {
+                label: "Users Gained",
+                data: Object.values(champDetails.info),
+                backgroundColor: [
+                  "rgba(75,192,192,1)",
+                  "#ecf0f1",
+                  "#00AF00",
+                  "#f3ba2f",
+                ],
+                borderColor: "black",
+                borderWidth: 2,
+                hoverBackgroundColor: "rgba(232,105,90,0.8)",
+                hoverBorderColor: "orange",
+              },
             ],
-            borderColor: "black",
-            borderWidth: 2,
-          },
-        ],
-      });
+            
+          });
+        }
+    }
     return (
         <div className="main-page">
             {JSON.stringify(champDetails) !== '{}' ? 
@@ -58,6 +63,15 @@ function ChampDetail(){
             }
             <h1>{champDetails.name} - {champDetails.title}</h1>
             <img src={"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+ championName +"_0.jpg"}></img>
+            {JSON.stringify(userData) !== '{}'? 
+            <>  
+                <div id='champion_stats_chart'>
+                    <PieChart chartData={userData} />
+                </div>
+            </> 
+            : 
+            <> <script>{renderChart()}</script></>
+            }
             {JSON.stringify(champDetails) !== '{}' ? 
             <>  
             <p className='background-info'>{champDetails['lore']}</p>
@@ -110,16 +124,6 @@ function ChampDetail(){
             : 
             <><p>Loading</p></>
             }
-            {document.readyState==='complete'? 
-            <>  
-            <script></script>
-            </> 
-            : 
-            <></>
-            }
-            <div style={{ width: 700 }}>
-                <PieChart chartData={userData} />
-            </div>
         </div>
     )
 }

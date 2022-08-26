@@ -31,7 +31,13 @@
     width:100%;
   }
   #champion_stats_chart{
+    top: 20px;
+    right: 40px;
+    color: #000000;
     width:400px;
     height:400px;
+    position: absolute;
+    background-color: #c49c9c;
+    border-radius: 25%;
+    padding: 30px;
   }
-  
